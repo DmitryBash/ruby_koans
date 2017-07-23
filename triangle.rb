@@ -14,21 +14,14 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  #if this triangle exists
-  unless (a < b + c) && (b < a + c) && (c < a + b)
-    raise TriangleError
-  end
-
-  return_triangle(a, b, c)
+  check_triangle(a, b, c)
+  [:equilateral,:isosceles,:scalene].fetch([a,b,c].uniq.size - 1)
 end
 
-def return_triangle(a, b, c)
-  if a == b && b == c
-    :equilateral
-  elsif a == b || a == c || b == c
-    :isosceles
-  else
-    :scalene
+def check_triangle(a, b, c)
+  array = [a, b, c].sort
+  if array.any? { |v| v <= 0 } || array[0] + array[1] <= array[2]
+    raise TriangleError
   end
 end
 
